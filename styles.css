@@ -1,0 +1,278 @@
+#MainMenu,
+header,
+footer {
+  visibility: hidden;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Handlee&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
+
+/* Inicio font pagina */
+.css-nsuj5j {
+  font-family: "Roboto", sans-serif;
+}
+/* Fin font pagina */
+
+/* Inicio hover textos */
+.st-c8 {
+  color: #091a42;
+}
+
+.st-c8:hover {
+  color: #4d7eff;
+}
+/* Fin hover textos */
+
+/*Inicio Fondo menu lateral */
+.css-6qob1r {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: overlay;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='333' height='1000' preserveAspectRatio='none' viewBox='0 0 333 1000'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1476%26quot%3b)' fill='none'%3e%3crect width='333' height='1000' x='0' y='0' fill='rgba(255%2c 255%2c 255%2c 1)'%3e%3c/rect%3e%3cpath d='M166 386L272 492' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1477%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M203 428L382 607' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1478%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M215 518L0 303' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1479%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M178 958L338 1118' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1480%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M69 815L-16 730' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1481%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M310 385L398 473' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1482%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M306 802L165 661' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1481%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M34 182L151 299' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1483%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M110 108L9 7' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1480%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M90 948L180 1038' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1484%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M271 44L465 238' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1485%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M224 299L-9 66' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1479%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M47 99L180 232' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1486%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M84 364L-81 199' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1484%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M243 386L98 241' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1478%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M128 345L317 534' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1486%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M249 136L399 286' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1477%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M217 29L411 223' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1487%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M74 602L192 720' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1488%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M273 944L482 1153' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1486%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M274 430L112 268' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1480%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M189 167L-60 -82' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1484%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M179 612L56 489' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1482%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M57 323L-69 197' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1486%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M35 813L-78 700' stroke-width='6' stroke='url(%26quot%3b%23SvgjsLinearGradient1478%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3cpath d='M66 951L310 1195' stroke-width='10' stroke='url(%26quot%3b%23SvgjsLinearGradient1488%26quot%3b)' stroke-linecap='round' class='TopLeft'%3e%3c/path%3e%3cpath d='M88 721L334 967' stroke-width='8' stroke='url(%26quot%3b%23SvgjsLinearGradient1484%26quot%3b)' stroke-linecap='round' class='BottomRight'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1476'%3e%3crect width='333' height='1000' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1477'%3e%3cstop stop-color='rgba(110%2c 39%2c 197%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(110%2c 39%2c 197%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1478'%3e%3cstop stop-color='rgba(241%2c 53%2c 43%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(241%2c 53%2c 43%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1479'%3e%3cstop stop-color='rgba(241%2c 53%2c 43%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(241%2c 53%2c 43%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1480'%3e%3cstop stop-color='rgba(1%2c 193%2c 214%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(1%2c 193%2c 214%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1481'%3e%3cstop stop-color='rgba(122%2c 203%2c 0%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(122%2c 203%2c 0%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1482'%3e%3cstop stop-color='rgba(255%2c 182%2c 23%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 182%2c 23%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1483'%3e%3cstop stop-color='rgba(122%2c 203%2c 0%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(122%2c 203%2c 0%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1484'%3e%3cstop stop-color='rgba(255%2c 1%2c 152%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 1%2c 152%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1485'%3e%3cstop stop-color='rgba(255%2c 102%2c 0%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 102%2c 0%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1486'%3e%3cstop stop-color='rgba(110%2c 39%2c 197%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(110%2c 39%2c 197%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='0%25' y1='0%25' x2='100%25' y2='100%25' id='SvgjsLinearGradient1487'%3e%3cstop stop-color='rgba(21%2c 15%2c 150%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(21%2c 15%2c 150%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1488'%3e%3cstop stop-color='rgba(255%2c 1%2c 152%2c 0)' offset='0'%3e%3c/stop%3e%3cstop stop-color='rgba(255%2c 1%2c 152%2c 1)' offset='1'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+  box-shadow: 10px -1px 8px -4px rgba(0, 0, 0, 0.75);
+}
+/* Fin Fondo menu lateral */
+
+/* Inicio fondo de listas */
+ul {
+  background-color: #ebf1ff;
+}
+/* Fin fondo de listas */
+
+/* Inicio estilos titulos menu lateral */
+.css-nsuj5j p {
+  word-break: break-word;
+  margin-bottom: 0px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #091a42;
+}
+
+/* Inicio ocultar barra indicador menu */
+.st-du {
+  background-color: #a5a5a5;
+}
+
+.st-dm {
+  background-color: #4d7eff;
+}
+
+.st-dr {
+  height: 0.125rem;
+}
+
+.st-cq {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.st-dn {
+  position: absolute;
+}
+/* Inicio ocultar barra indicador menu */
+
+/* Inicio Botones que abren y cierran el menu lateral */
+.css-1csa8lq {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  margin: 0px 0.125rem;
+  width: auto;
+  user-select: none;
+  background-color: white !important;
+  border-radius: 50px;
+  border: none;
+  padding: 0.5rem;
+  line-height: 1;
+  color: #797979;
+}
+
+.css-1csa8lq:hover {
+  background-color: #6a93ff9c !important;
+  color: white;
+}
+/* Fin Botones que abren y cierran el menu lateral */
+
+/* Inicio boton cargar archivo */
+.css-ezd9go {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 0.25rem 2.75rem;
+  margin: 0px;
+  line-height: 1.6;
+  user-select: none;
+  background-color: #091a42;
+  color: white;
+  border: none;
+  font-weight: bold !important;
+  height: 35px;
+  width: auto;
+  border-radius: 50px;
+}
+
+.css-ezd9go:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.css-ezd9go:focus:not(:active) {
+  color: white;
+  border-color: none;
+  background-color: #4d7eff;
+}
+
+.css-ezd9go:hover {
+  background-color: #4d7eff;
+  color: white;
+  border: none;
+}
+
+.css-ezd9go:active {
+  color: white;
+  border-color: none;
+  background-color: #4d7eff;
+}
+/* Fin boton cargar archivo */
+
+/* Inicio boton ejecutar modelo*/
+.css-bcpc81 {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 0.25rem 2.75rem;
+  margin: 0px;
+  line-height: 1.6;
+  user-select: none;
+  background-color: #091a42;
+  color: white;
+  border: none;
+  font-weight: bold !important;
+  height: 35px;
+  width: auto;
+  border-radius: 50px;
+}
+
+.css-bcpc81:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.css-bcpc81:focus:not(:active) {
+  color: white;
+  border-color: none;
+  background-color: #4d7eff;
+}
+
+.css-bcpc81:hover {
+  background-color: #4d7eff;
+  color: white;
+  border: none;
+}
+
+.css-bcpc81:active {
+  color: white;
+  border-color: none;
+  background-color: #4d7eff;
+}
+/* Fin boton ejecutar modelo*/
+
+/* Inicio color titulos y subtitulos */
+.css-b1jwkk {
+  color: #4d7eff;
+}
+
+h3 {
+  color: #c38fd0;
+  font-size: 22px;
+  font-weight: 600;
+}
+/* Fin color titulos y subtitulos */
+
+/* Inicio fondo panel informacion */
+.css-uf99v8 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  -webkit-box-align: center;
+  align-items: center;
+  /* background-color: #f0ffff40; */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* Fin fondo panel informacion */
+
+.st-de {
+  background: none;
+}
+
+/* .st-de:hover {
+  color: #4d7eff;
+} */
+
+.css-qcqlej {
+  width: 100%;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+}
+
+.css-z5fcl4 {
+  width: 100%;
+  padding: 4rem 2rem 2rem 2rem;
+  min-width: auto;
+  max-width: initial;
+}
+
+.css-1kfsq69 {
+  color: rgba(70, 30, 125, 0.4);
+  font-size: 14px;
+  height: 2.5rem;
+  min-width: auto;
+  max-width: initial;
+  padding: 0rem 0rem;
+  width: 100%;
+}
+
+.st-du {
+  background-color: #efc800;
+}
+
+/* Inicio padding y color fondo menu lateral */
+.css-1544g2n {
+  padding: 5rem 1rem 1.5rem;
+  background-color: transparent;
+}
+/* Fin padding y color fondo menu lateral */
+
+/* Inicio color fondo despliegue lista */
+.st-dz {
+  border-bottom-color: rgb(163, 168, 184);
+  background-color: #6e27c529;
+}
+/* Fin color fondo despliegue lista */
+
+/* Inicio color fondo despliegue titulos lista */
+.st-c8 {
+  color: #091a42;
+  /* background-color: #01c1d62e; */
+}
+/* Fin color fondo despliegue titulos lista */
+
+/* Inicio size font */
+.css-1544g2n h6 {
+  font-size: 45px;
+  font-weight: normal;
+  color: black;
+  letter-spacing: 12px;
+}
+/* Fin size font */

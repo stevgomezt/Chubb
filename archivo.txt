@@ -1,0 +1,6 @@
+15:26:57 11/07/2023 - En la columna RANGODECOMPRA($) se encontraron 4 registros con campos vacios en las filas: 7,8,9,10.
+ 
+15:26:57 11/07/2023 - En la columna RANGORECURRENCIACOMPRA se encontraron 5 registros con campos vacios en las filas: 1,2,3,4,5.
+ 
+15:26:57 11/07/2023 - En la columna TIPOCLIENTE#OPORTUNIDADES se encontraron 5 registros con campos vacios en las filas: 12,13,14,15,16.
+ 
