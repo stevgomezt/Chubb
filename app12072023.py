@@ -1,33 +1,28 @@
-import logging  # Para registrar mensajes de registro
-import sys  # Para acceder a argumentos y rutas del sistema
-from typing import Union  # Para proporcionar anotaciones de tipos
-
-import numpy as np  # Para cálculos numéricos
-import pandas as pd  # Para manipulación y análisis de datos
-import altair as alt  # Para visualización interactiva de datos
-import matplotlib.pyplot as plt  # Para visualización estática de datos
-import plotly.express as px  # Para visualización interactiva y expresiva de datos
-import plotly.graph_objects as go  # Para crear gráficos interactivos avanzados
-import plotly.colors as colors_plotly  # Para trabajar con colores en Plotly
-
-# Para construir aplicaciones web con Flask
+import streamlit as st
+import numpy as np
+import pandas as pd
 from flask import Flask, request, jsonify, render_template, url_for
-# Para interactuar con servicios de almacenamiento en la nube de Google
+# import pickle
+# import xgboost
+# import joblib
+import sys
+import logging
+from typing import Union
 from google.cloud import storage
-
-import streamlit as st  # Para crear aplicaciones web interactivas y paneles de control
-
-# Módulo personalizado para validar, preprocesar y predecir datos
+import altair as alt
 import validar_preprocesar_predecir_organizarrtados
+from datetime import date
+import matplotlib.pyplot as plt
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.colors as colors_plotly
 
-from datetime import date  # Para trabajar con fechas
-
-import base64  # Para realizar codificación y decodificación en base64
-import json  # Para trabajar con datos en formato JSON
-import pickle  # Para serializar y deserializar objetos en Python
-import uuid  # Para generar identificadores únicos
-import re  # Para trabajar con expresiones regulares
-
+import base64
+# import os
+import json
+import pickle
+import uuid
+import re
 
 # Para Botones sin recargar
 
@@ -301,10 +296,8 @@ def say_hello():
 
 # ------------------------------------------------------
 
-
 def agregar_k(valor):
     return str(valor) + 'K'
-
 
 def generar_graficos(df_t, configuraciones, mayus=True, color=1, auto_orden=False, total=False):
     for config in configuraciones:
@@ -333,7 +326,7 @@ def generar_graficos(df_t, configuraciones, mayus=True, color=1, auto_orden=Fals
             {'NIT9': 'Cantidad_n', config['groupby']: config['y_axis']}, axis=1, inplace=True)
         df_group['Cantidad_n'] = pd.to_numeric(df_group['Cantidad_n'])
         df_group['Cantidad_n'] = df_group['Cantidad_n']*100
-
+        
         if mayus == True:
 
             keys = config['order']
@@ -352,48 +345,52 @@ def generar_graficos(df_t, configuraciones, mayus=True, color=1, auto_orden=Fals
         df_group['Porcentaje'] = df_group['Porcentaje'].round(2)
         df_group['Porcentaje'] = df_group['Porcentaje'].apply(
             lambda x: ' {:.2f}%'.format(x))
-
-        # df_group['Cantidad'] = df_group['Cantidad_n'].apply(agregar_k)
-
+        
+        # df_group['Cantidad'] = df_group['Cantidad_n'].apply(agregar_k)  
+        
         # st.write(df_group)
         if color == 0:
-            color_b = "#52a5d9"
+            color_b = "#52a5d9"  # 00d26a"# "#2afd95"#'#717171' #'#023059'
         if color == 1:       # Morado oscuro
-            color_b = '#6e27c5'
+            color_b = '#311557'
         elif color == 2:      # Naranja
-            color_b = '#01c1d6'
+            color_b = '#fd6600'
         elif color == 3:     # Azul cielo
-            color_b = '#7acb00'
+            color_b = '#2cfef9'
         elif color == 4:    # Verde Claro
-            color_b = '#ffb617'
+            color_b = '#2afd95'
         elif color == 5:  # Amarillo Claro
             color_b = '#fef367'
         elif color == 6:     # Fuccia
-            color_b = '#ff6600'
+            color_b = '#ff006e'
         elif color == 7:     # Morado Claro
-            color_b = '#66003d'
+            color_b = '#5738ff'
 
         if mayus == True:
             if total == False:
 
-                # nuevos_valores_xticks = [5,10,15]#'5 K', '10 K', '15 K', '20 K'
+                #nuevos_valores_xticks = [5,10,15]#'5 K', '10 K', '15 K', '20 K'
                 bar = alt.Chart(df_group).mark_bar().encode(
                     x=alt.X('Cantidad_n', axis=alt.Axis(
                         ticks=True, title=config['x_axis_title'],
-                        # values=nuevos_valores_xticks
-                    ),
-                        # scale=alt.Scale(type='ordinal')
+                        #values=nuevos_valores_xticks
+                        ),
+                    #scale=alt.Scale(type='ordinal')
                     ),
                     y=alt.Y(config['y_axis'] + ":N", sort=list(
                         df_group[config['y_axis']]), axis=alt.Axis(ticks=False, title='')),
                     tooltip=[config['y_axis']+":N",
-                             'Cantidad_n:Q', 'Porcentaje:O'
-                             # alt.Tooltip(config['y_axis']+":N"),
-                             # alt.Tooltip('Cantidad:Q', format=''),  # Add k letter before number
-                             # alt.Tooltip('Porcentaje:O', format='%')
+                    'Cantidad_n:Q', 'Porcentaje:O'
+                        # alt.Tooltip(config['y_axis']+":N"),
+                        # alt.Tooltip('Cantidad:Q', format=''),  # Add k letter before number
+                        # alt.Tooltip('Porcentaje:O', format='%')
                              ],
                     text=alt.Text('Porcentaje:N')
                 ).configure_mark(color=color_b).configure_view(fill="none").configure_axis(grid=False)  # .configure_axisY(
+               
+               
+               
+               
                 # labelFont='Roboto',  # Cambia la fuente de las etiquetas
                 # labelFontSize=1,   # Cambia el tamaño de las etiquetas
                 # labelColor='#8568a8'    # Cambia el color de las etiquetas
@@ -458,7 +455,9 @@ def dona_plotly(df_prob_prod, producto='INSTALACIONES', col=None, titulo=None, t
     etiquetas = ['Alta', 'Media', 'Baja']
 
     # Colores personalizados
-    colores = ['#6e27c5', '#01c1d6', '#f4f4f4']
+    colores = ['#3257A3', '#52A5D9', '#ACD7F2']
+    # colores = ['#3F6CA6','#2C4A73','#A0C4F2']
+    # colores = ['#9AB5D9','#CEDEF2','#035AA6']
 
     total = sum(valores)
     conteos = [str(valor) for valor in valores]
@@ -585,8 +584,8 @@ def main():
 
     # Variable que controla la visibilidad de la imagen
     b = False
-    vista2, vista1 = st.tabs(
-        ["Reporte descriptivo", "Resultado modelo"])  # 'Inicio', vista0,
+    vista2,vista1  = st.tabs(
+        [ "Reporte descriptivo","Resultado modelo"])  # 'Inicio', vista0,
 
     # Menú y logo
     # st.sidebar.image("img/enelX_logo_negative-resize.png", width=200)
@@ -623,24 +622,21 @@ def main():
 
     st.markdown(
         """
-        <head>
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        </head>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
 
-        <div style="display: flex; justify-content: center;">
-            <a href="https://www.linkedin.com/company/chubb/" style="color: #1877F2; margin: 0 30px;">
-                <i class="fab fa-linkedin" style="font-size: 30px;"></i>
-            </a>
-            <a href="https://www.instagram.com/chubbglobal/" style="color: #E4405F; margin: 0 30px;">
-                <i class="fab fa-instagram" style="font-size: 30px;"></i>
-            </a>
-            <a href="https://twitter.com/i/flow/login?redirect_after_login=%2Fchubb_seguros" style="color: #1DA1F2; margin: 0 30px;">
-                <i class="fab fa-twitter-square" style="font-size: 30px;"></i>
-            </a>
-            <a href="https://www.youtube.com/channel/UCKUW_iz1AZwr_UBOp9mN4iQ" style="color: #FF0000; margin: 0 30px;">
-                <i class="fab fa-youtube-square" style="font-size: 30px;"></i>
-            </a>
-        </div>
+    <div style="display: flex; justify-content: center;">
+        <a href="https://www.facebook.com/addicol" style="color: #1877F2; margin: 0 15px;">
+            <i class="fab fa-facebook" style="font-size: 30px;"></i>
+        </a>
+        <a href="https://www.instagram.com/addi/" style="color: #E4405F; margin: 0 15px;">
+            <i class="fab fa-instagram" style="font-size: 30px;"></i>
+        </a>
+        <a href="https://www.tiktok.com/@addicolombia" style="color: #000000; margin: 0 15px;">
+            <i class="fab fa-tiktok" style="font-size: 30px;"></i>
+        </a>
+    </div>
     """,
         unsafe_allow_html=True
     )
@@ -669,11 +665,19 @@ def main():
                     dataframe)
                 df_v, text, final_flag = ob.Validar_todo()
 
+
+# -----------------------------------------------------
+
+# -----------------------------------------------------
+
 # -----------------------------------------------------
 
                 if final_flag == False:
 
                     logs, logs_riesgo, indices_posibles = ob.Logs()
+
+                    # st.write(len(logs_riesgo))
+                    # st.write(logs_riesgo)
 
                     if '1' not in logs_riesgo:
 
@@ -724,6 +728,58 @@ def main():
 
         except UnboundLocalError:
             st.warning('Error. Problemas con caracteristicas del archivo.')
+
+    # with st.sidebar.expander("MODELO UNITARIO ", expanded=False):
+    #     try:
+    #         # Lectura de datos
+    #         nit = st.number_input("Digite el número del Nit",
+    #                               min_value=1000000, max_value=99999999999)
+    #         actEcon = st.text_input(
+    #             "Actividad económica", value='Administración Empresarial')
+    #         tamEmp = st.selectbox("Tamaño de la empresa", [
+    #                               'Gran Empresa', 'Mediana Empresa', 'Pequeña Empresa'])
+    #         flegal = st.selectbox("Forma Legal", [
+    #                               'SAS', 'LTDA', 'SA', 'ESAL', 'SUCURSALEXTRANJERA', 'SCA', 'UNDEFINED', 'SCS', 'PERSONANATURAL'])
+    #         numEmpl = st.number_input(
+    #             "Número de empleados", min_value=1, step=1)
+    #         activos = st.number_input("Activos Totales")
+    #         ingresosOp = st.number_input("Total Ingresos Operativos")
+    #         TotPatr = st.number_input("Total Patrimonio")
+    #         ganDespImpto = st.number_input("Ganancias después de Impuestos")
+    #         fecha_constitucion = st.date_input(
+    #             "Fecha de constitución", min_value=date(1000, 1, 1), max_value=date.today())
+    #         consprom = st.number_input("Consumo promedio kWh", min_value=0)
+
+    #         # button
+    #         boton_c = st.button("Ejecutar Modelo",
+    #                             key="boton_ejecutar", type="primary")
+    #         dataframe_u = pd.DataFrame({'NIT9': nit,
+    #                                     'ACTIVIDADPRINCIPAL(EMIS)': actEcon,
+    #                                     'TAMANOEMPRESA': tamEmp,
+    #                                     'FORMALEGAL': flegal,
+    #                                     'NUMERODEEMPLEADOS': numEmpl,
+    #                                     'ACTIVOSTOTALES': activos,
+    #                                     'TOTALINGRESOOPERATIVO': ingresosOp,
+    #                                     'TOTALDEPATRIMONIO': TotPatr,
+    #                                     'GANANCIASDESPUESDEIMPUESTOS': ganDespImpto,
+    #                                     'FECHACONSTITUCION': fecha_constitucion,
+    #                                     'CONSPROM': consprom}, index=[1])
+
+    #         try:
+    #             dataframe_u['FECHACONSTITUCION'] = dataframe_u['FECHACONSTITUCION'].astype(
+    #                 'datetime64[ns]')
+    #             # dataframe_u['NUMERODEEMPLEADOS']=dataframe_u['NUMERODEEMPLEADOS'].astype('int64')
+    #         except:
+    #             pass
+    #         if boton_c == True:
+    #             ob_u = validar_preprocesar_predecir_organizarrtados.Modelos_2(
+    #                 dataframe_u)
+
+    #         else:
+    #             pass
+
+    #     except UnboundLocalError:
+    #         st.warning('Error. Problemas con los datos ingresados.')
 
     if b == True:
         # -----------------------------------------------------13/06/23
@@ -858,6 +914,7 @@ def main():
                 col1_container2, col2_container2 = container2.columns(
                     2)  # , col3_container2, col4_container2
 
+
 # -----------------------------------------------------
 
                 # # Título con tamaño y color configurables
@@ -899,17 +956,15 @@ def main():
                     Xf, auto_orden=True, configuraciones=configuraciones, color=0, total=False)
                 espacio(col3_container1, 9)
                 # col3_container1)
-
-                Xf = Xf.loc[:, ['NIT9', 'Producto_1',	'Probabilidad_1',	'Valor_probabilidad1',	'Producto_2',
-                                'Probabilidad_2',	'Valor_probabilidad2',	'Producto_3',	'Probabilidad_3', 'Valor_probabilidad3',
-                                'Producto_4',	'Probabilidad_4',	'Valor_probabilidad4',	'Producto_5',	'Probabilidad_5',
-                                'Valor_probabilidad5',	'Producto_6',	'Probabilidad_6',	'Valor_probabilidad6',	'Producto_7',
-                                'Probabilidad_7',	'Valor_probabilidad7',	'Producto_8',	'Probabilidad_8',	'Valor_probabilidad8']]
-
-                dic1 = ['INSTALACIONES', 'MANTENIMIENTO', 'ESTUDIOS', 'AUMENTOS_CARGA',
-                        'FIBRA_OPTICA', 'REDESELECTRICAS', 'ILUMINACION', 'CUENTASNUEVAS']
-                dic2 = ['Compra protegida', 'AP', 'Equipos electrónicos móviles',
-                        'Autocontenidos', 'Renta hogar', 'Exequias', 'Bolso protegido', 'AP Travel']
+                
+                Xf = Xf.loc[:,['NIT9','Producto_1',	'Probabilidad_1',	'Valor_probabilidad1',	'Producto_2',
+                               'Probabilidad_2',	'Valor_probabilidad2',	'Producto_3',	'Probabilidad_3','Valor_probabilidad3',
+                               'Producto_4',	'Probabilidad_4',	'Valor_probabilidad4',	'Producto_5',	'Probabilidad_5',
+                               'Valor_probabilidad5',	'Producto_6',	'Probabilidad_6',	'Valor_probabilidad6',	'Producto_7',
+                               'Probabilidad_7',	'Valor_probabilidad7',	'Producto_8',	'Probabilidad_8',	'Valor_probabilidad8']]
+                
+                dic1 = ['INSTALACIONES', 'MANTENIMIENTO', 'ESTUDIOS', 'AUMENTOS_CARGA', 'FIBRA_OPTICA', 'REDESELECTRICAS', 'ILUMINACION', 'CUENTASNUEVAS']
+                dic2 = ['Compra protegida', 'AP', 'Equipos electrónicos móviles', 'Autocontenidos', 'Renta hogar', 'Exequias', 'Bolso protegido', 'AP Travel']
                 Xf = Xf.replace(dict(zip(dic1, dic2)))
                 download_excel(Xf, 'Resultado', col=col2_container1)
 
@@ -959,21 +1014,71 @@ def main():
         with vista2:    # Descriptiva
             try:
                 tab4, tab2 = st.tabs(
-                    ["Demográfico", "Ventas"])
+                    [ "Demográfico","Ventas" ])
 
                 df_t, _ = ob.transform_load()  # _graf
                 df_t = df_t.copy()
+                # with tab1:  # RANGOCONSUMO piee
+                #     st.write("")
+                #     st.write("")
+
+                #     col10, col11, col12, col13 = st.columns(
+                #         spec=[0.35, 5, 1, 0.25])
+
+                #     configuraciones = [
+                #         {
+                #             'groupby': 'RANGOCONSUMO',
+                #             'count_col': 'NIT9',
+                #             'x_axis_title': 'Cantidad de clientes',
+                #             'y_axis': 'Rango de Consumo',
+                #             'col': col11,
+                #             'order': ['SINCATALOGAR', 'MENORA5000', 'ENTRE5000Y10000', 'ENTRE10000Y55000',  'MAYORA55000'],
+                #             'order_f':['Sin catalogar', 'Menor a 5000 kW⋅h',  'Entre 5000 y 10000 kW⋅h', 'Entre 10000 y 55000 kW⋅h',   'Mayor a 55000 kW⋅h']
+                #         }
+                #     ]
+
+                #     col11.subheader("Rango de consumo")
+                #     # ob.generar_graficos_pie(configuraciones)
+                #     col11.plotly_chart(ob.generar_graficos_pie(
+                #         configuraciones, paleta=1), use_container_width=True)
+
+                #     n = 0
+
+                #     col12.write("")
+
+                #     col12.write("Descargar:")
+                #     col12.write("")
+
+                #     keys = ['Sin Catalogar', 'Menor a 5000', 'Entre 5000 y 10000',
+                #             'Entre 10000 y 55000', 'Mayor a 55000']
+                #     values = ['Sin catalogar', 'Menor a 5000 kW⋅h',
+                #               '5000 a 10000 kW⋅h', '10000 a 55000 kW⋅h', 'Mayor a 55000 kW⋅h']
+
+                #     dic_rango_consumo = dict(zip(keys, values))
+
+                #     Xf['RANGOCONSUMO'] = Xf['RANGOCONSUMO'].replace(
+                #         dic_rango_consumo)
+
+                #     print(Xf['RANGOCONSUMO'].unique())
+                #     botones_descarga(Xf=Xf, variable='RANGOCONSUMO', col=col12)
+
+                #     # st.write(Xf)
+                #     # boton_descarga(label ='Sin Catalogar',data=Xf[Xf['RANGOCONSUMO']=='SINCATALOGAR']  )
+                #     # download_excel(Xf[Xf['RANGOCONSUMO']=='SINCATALOGAR'], 'Sin Catalogar')
+                #     # download_excel(Xf[Xf['RANGOCONSUMO']=='MENORA5000'], 'Menor a  5000')
+
+
 # -----------------------------------------------------
 
-                with tab2:
+                with tab2:  
                     st.write("")
                     st.write("")
                     # st.subheader("VENTAS")
                     # st.write("")
-                    col1, col2, col3 = st.columns(spec=[1, 5, 1])
+                    col1,col2,col3 = st.columns(spec=[1,5,1]) #
 
                     col2.subheader("Clientes con producto")
-
+ 
                     # Configuraciones de los gráficos
                     configuraciones = [
                         {
@@ -983,13 +1088,12 @@ def main():
                             'y_axis': 'Rango de compra',
                             # 'chart_title': 'Gráfico 1 Ventas/Rango de Compra($)',
                             'col': col2,
-                            # Orden deseado de las categorías
-                            'order': ['SINCATALOGAR', 'NOCOMPRADOR', 'PEQUENOCOMPRADOR', 'MEDIANOCOMPRADOR', 'GRANCOMPRADOR', 'COMPRADORMEGAPROYECTOS'],
-                            'order_f':['AP', 'AP', 'Compra protegida', 'Equipos móviles', 'Exequias', 'Bolso protegido', 'No comprador']
+                            'order': ['SINCATALOGAR', 'NOCOMPRADOR', 'PEQUENOCOMPRADOR', 'MEDIANOCOMPRADOR', 'GRANCOMPRADOR', 'COMPRADORMEGAPROYECTOS'],  # Orden deseado de las categorías
+                            'order_f':['AP','AP','Compra protegida','Equipos móviles','Exequias', 'Bolso protegido','No comprador']
                         }]
-                    generar_graficos(df_t, configuraciones, color=1)
+                    generar_graficos(df_t, configuraciones,color =1)   
 
-                    col2.subheader("Oferta último semestre")
+                    col2.subheader("Oferta último semestre")    
                     configuraciones = [
                         {
                             'groupby': 'RANGORECURRENCIACOMPRA',
@@ -998,12 +1102,11 @@ def main():
                             'y_axis': 'Recurrencia de compra',
                             # 'chart_title': 'Gráfico 2 RangoRecurrenciaCompra',
                             'col': col2,
-                            # Orden deseado de las categorías
-                            'order': ['SINCATALOGAR', 'NOCOMPRADOR', 'UNICACOMPRA', 'BAJARECURRENCIA', 'RECURRENCIAMEDIA', 'GRANRECURRENCIA'],
-                            'order_f':['Sin catalogar', 'AP', 'Compra protegida', 'Exequias', 'Renta hogar', 'Bolso protegido']
-                            # 'order_f':['Sin catalogar', 'No comprador','Unica compra','Baja recurrencia','Recurrencia media','Gran recurrencia']
+                            'order': ['SINCATALOGAR', 'NOCOMPRADOR', 'UNICACOMPRA', 'BAJARECURRENCIA', 'RECURRENCIAMEDIA', 'GRANRECURRENCIA'],  # Orden deseado de las categorías
+                            'order_f':['Sin catalogar', 'AP','Compra protegida','Exequias' ,'Renta hogar','Bolso protegido']
+                            #'order_f':['Sin catalogar', 'No comprador','Unica compra','Baja recurrencia','Recurrencia media','Gran recurrencia']                   
                         }]
-                    generar_graficos(df_t, configuraciones, color=2)
+                    generar_graficos(df_t, configuraciones,color =2)
 
                     col2.subheader("Frecuencia de contacto")
                     configuraciones = [
@@ -1012,13 +1115,18 @@ def main():
                             'count_col': 'NIT9',
                             'x_axis_title': 'Cantidad de clientes',
                             'y_axis': 'Tipo de cliente por numero de oportunidades',
+                            # 'chart_title': 'Gráfico 3 TIPOCLIENTE#OPORTUNIDADES',
                             'col': col2,
-                            'order': ['SINCATALOGAR', 'NICOMPRA-NICOTIZA', 'SOLOCOTIZAN', 'COTIZANMASDELOQUECOMPRAN',
-                                      'COMPRANYCOTIZAN', 'COMPRANMASDELOQUECOTIZAN', 'SIEMPRECOMPRAN'],  # Orden deseado de las categorías
-                            'order_f':['Sin catalogar', 'Entre 31 y 60 días', 'Entre 61 y 90 días', 'Entre 91 y 120 días',
-                                       'Entre 121 y 150 días', 'Entre a 151 y 180 días', 'Mayores a 180 días'],
+                            'order':['SINCATALOGAR', 'NICOMPRA-NICOTIZA', 'SOLOCOTIZAN', 'COTIZANMASDELOQUECOMPRAN', 
+                                    'COMPRANYCOTIZAN', 'COMPRANMASDELOQUECOTIZAN', 'SIEMPRECOMPRAN'],  # Orden deseado de las categorías
+                            'order_f':['Sin catalogar','Entre 31 y 60 días','Entre 61 y 90 días','Entre 91 y 120 días',
+                                       'Entre 121 y 150 días','Entre a 151 y 180 días', 'Mayores a 180 días'],
+
+                           
+                            # 'order_f':['Sin catalogar','Ni compra - ni cotiza','Solo cotizan','Cotizan mas de lo que compran',
+                            #            'Compran y cotizan','Compran  mas de lo que cotizan', 'Siempre compran'],
                         }]
-                    generar_graficos(df_t, configuraciones, color=3)
+                    generar_graficos(df_t, configuraciones,color =3)
 
                     col2.subheader("Valor de prima")
                     configuraciones = [
@@ -1029,23 +1137,23 @@ def main():
                             'y_axis': 'Tipo de cliente por valor de oportunidades',
                             # 'chart_title': 'Gráfico 4 TIPOCLIENTE$OPORTUNIDADES',
                             'col': col2,
-                            'order': ['SINCATALOGAR', 'NICOMPRA-NICOTIZA', 'SOLOCOTIZAN', 'COTIZANMASDELOQUECOMPRAN',
-                                      'COMPRANYCOTIZAN', 'COMPRANMASDELOQUECOTIZAN', 'SIEMPRECOMPRAN'],
-                            'order_f':['Sin catalogar', 'Menos a 40 mil', 'Entre 40 mil y 60 mil', 'Entre 60 mil y 80 mil',
-                                       'Entre 80 mil y 100 mil', 'Entre 100 mil y 120 mil', 'Mayor a 120 mil']   # Orden deseado de las categorías
+                            'order':['SINCATALOGAR', 'NICOMPRA-NICOTIZA', 'SOLOCOTIZAN', 'COTIZANMASDELOQUECOMPRAN', 
+                                    'COMPRANYCOTIZAN', 'COMPRANMASDELOQUECOTIZAN', 'SIEMPRECOMPRAN'],
+                            'order_f':['Sin catalogar','Menos a 40 mil','Entre 40 mil y 60 mil','Entre 60 mil y 80 mil',
+                                       'Entre 80 mil y 100 mil','Entre 100 mil y 120 mil', 'Mayor a 120 mil']   # Orden deseado de las categorías
                         }]
-                    generar_graficos(df_t, configuraciones, color=4)
+                    generar_graficos(df_t, configuraciones,color =4)
 
-                with tab4:
+                with tab4:            
                     st.write("")
                     st.write("")
-
-                    col31, col32, col33 = st.columns(spec=[1, 5, 1])
-
+                    
+                    col31,col32,col33 = st.columns(spec=[1,5,1])  
+                    
                     df_c = ob.Agrupar_actividades('ACTIVIDADPRINCIPAL(EMIS)')
-
-                    # --------------------------------------- 16/06/23
-
+                                        
+                    # --------------------------------------- 16/06/23                    
+                    
                     configuraciones = [
                         {
                             'groupby': 'ACTIVIDADES',
@@ -1053,20 +1161,19 @@ def main():
                             'x_axis_title': 'Cantidad de clientes',
                             'y_axis': 'Sector económico',
                             'col': col32,
-                            'order':  ['SERVICIOS', 'AGROPECUARIO', 'INDUSTRIAL', 'TRANSPORTE',  'COMERCIO', 'FINANCIERO', 'CONSTRUCCION', 'ENERGETICO', 'COMUNICACIONES'],
-                            'order_f':['Generación Baby Boomers', 'Millennials',  'Generación Z', 'Transporte', 'Generación X', 'Generación Baby boomers', 'Construcción', 'Energético', 'Comunicaciones']
+                            'order':  ['SERVICIOS','AGROPECUARIO', 'INDUSTRIAL', 'TRANSPORTE',  'COMERCIO','FINANCIERO','CONSTRUCCION' ,'ENERGETICO','COMUNICACIONES'],
+                            'order_f':['Generación Baby Boomers','Millennials',  'Generación Z','Transporte' , 'Generación X','Generación Baby boomers', 'Construcción','Energético','Comunicaciones']
                         }
-                    ]
-
+                        ]
+               
                     col32.subheader("Generación digital")
                     # ob.generar_graficos_pie(configuraciones)
-                    col32.plotly_chart(ob.generar_graficos_pie(
-                        configuraciones, paleta=1, width=500, height=300), use_container_width=True)
-
+                    col32.plotly_chart(ob.generar_graficos_pie(configuraciones,paleta=1,width =500,height=300),use_container_width=True)
+                    
                     # -------------------------------------------
-
+                                     
                     # Configuraciones de los gráficos barras
-
+                    
                     configuraciones = [
                         {
                             'groupby': 'TAMANOEMPRESA',
@@ -1075,10 +1182,8 @@ def main():
                             'y_axis': 'Tamaño de la empresa',
                             # 'chart_title': 'Gráfico 1 Ventas/Rango de Compra($)',
                             'col': col32,
-                            # Orden deseado de las categorías
-                            'order': ['SINCATALOGAR', 'PEQUENAEMPRESA', 'MEDIANAEMPRESA', 'GRANEMPRESA'],
-                            # Orden deseado de las categorías
-                            'order_f':['Sin catalogar', 'Profesional', 'Tecnólogo', 'Bachiller']
+                            'order': ['SINCATALOGAR', 'PEQUENAEMPRESA', 'MEDIANAEMPRESA', 'GRANEMPRESA'],  # Orden deseado de las categorías
+                            'order_f':['Sin catalogar', 'Profesional', 'Tecnólogo','Bachiller']   # Orden deseado de las categorías
                         },
                         {
                             'groupby': 'CATEGORIZACIONSECTORES',
@@ -1087,9 +1192,8 @@ def main():
                             'y_axis': 'Categoria del sector',
                             # 'chart_title': 'Gráfico 2 RangoRecurrenciaCompra',
                             'col': col32,
-                            'order': ['SINCATALOGAR', 'OTROSSECTORES', 'SECTORALTOVALOR'],
-                            # Orden deseado de las categorías
-                            'order_f':['Sin catalogar', 'Empleado', 'Independiente']
+                            'order': ['SINCATALOGAR', 'OTROSSECTORES', 'SECTORALTOVALOR'] ,
+                            'order_f':['Sin catalogar', 'Empleado', 'Independiente']   # Orden deseado de las categorías    
                         },
                         {
                             'groupby': 'ESTATUSOPERACIONAL',
@@ -1098,17 +1202,15 @@ def main():
                             'y_axis': 'Estatus operacional',
                             # 'chart_title': 'Gráfico 3 TIPOCLIENTE#OPORTUNIDADES',
                             'col': col32,
-                            # Orden deseado de las categorías
-                            'order': ['NOSECONOCEELESTATUS', 'BAJOINVESTIGACIONLEGAL', 'OPERACIONAL'],
-                            # Orden deseado de las categorías
-                            'order_f': ['No se conoce el estatus', 'Bajo investigacion legal',  'Operacional']
+                            'order': ['NOSECONOCEELESTATUS', 'BAJOINVESTIGACIONLEGAL', 'OPERACIONAL'] , # Orden deseado de las categorías
+                            'order_f': ['No se conoce el estatus', 'Bajo investigacion legal',  'Operacional']   # Orden deseado de las categorías
                         }]
-
+                    
                     col32.subheader("Nivel educativo")
-                    generar_graficos(df_c, configuraciones[0:1], color=3)
+                    generar_graficos(df_c, configuraciones[0:1],color =3)
 
                     col32.subheader("Situación laboral")
-                    generar_graficos(df_c, configuraciones[1:2], color=4)
+                    generar_graficos(df_c, configuraciones[1:2],color =4)
 # Demograficas
                     st.write("")
                     st.write("")
@@ -1131,10 +1233,126 @@ def main():
                             'order_f': ['No se conoce el departamento',  'Otros departamentos',  'Costa',  'Cundinamarca',  'Bogotá DC']
 
                         }]
+                    # col0.subheader("Departamento")
+                    # col0.plotly_chart(ob.generar_graficos_pie(
+                    #     configuraciones, paleta=1), use_container_width=True)
+                    # col002.write("")
+                    # # col002.write("")
+                    # col002.write("Descargar:")
+                    # col002.write("")
+
+                    # keys = ['No se conoce el departamento',   'Otros Departamentos',  'Costa',
+                    #         'Cundinamarca',  'BOGOTADC']  # Orden deseado de las categorías
+                    # values = ['No se conoce el departamento',  'Otros deptos',  'Costa',
+                    #           'Cundinamarca',  'Bogotá DC']   # Orden deseado de las categorías
+
+                    # dic_dep = dict(zip(keys, values))
+                    # # print( 'uniques',Xf['CATEGORIADEPARTAMENTO'].unique() )
+                    # Xf['CATEGORIADEPARTAMENTO'] = Xf['CATEGORIADEPARTAMENTO'].replace(
+                    #     dic_dep)
+
+                    # botones_descarga(
+                    #     Xf=Xf, variable='CATEGORIADEPARTAMENTO', col=col002)
+
+                # with tab5:
+
+                #     df_c = ob.Agrupar_actividades('ACTIVIDADPRINCIPAL(EMIS)')
+                #     df_g = df_c.groupby(by=['DEPARTAMENTO', 'ACTIVIDADES'], as_index=False)[
+                #         ['OPORTUNIDADESVENDIDAS', 'OPORTUNIDADESCOTIZADAS($)']].sum()
+
+                #     col51, col52, col53 = st.columns(spec=[0.35, 5, 0.6])
+
+                #     col52.write('')
+                #     col52.write('')
+                #     col52.subheader(
+                #         "Actividad económica - departamento - ventas - cotizaciones")
+                #     col52.write('')
+                #     scatter_plot(df_g, col=col52)
 
             except UnboundLocalError:
                 st.warning(
                     'No ha cargado un archivo para procesar!. En el menú de la izquierda cargar archivo en la sección Modelo Múltiples Variables')
+
+#     if boton_c == True:    # MODELO UNITARIO
+
+#         with :  # Modelo Unitario
+#             # st.balloons()
+#             try:
+#                 st.write("")
+#                 # st.write(dataframe.head())
+
+#                 Xi, Xf = ob_u.predict_proba()
+#                 # st.write(Xf)
+
+#                 Xf.replace({'INSTALACIONES': 'Instalaciones',
+#                             'MANTENIMIENTO': 'Mantenimiento',
+#                             'ILUMINACION': 'Iluminación',
+#                             'ESTUDIOS': 'Estudios',
+#                             'FIBRA_OPTICA': 'Fibra óptica',
+#                             'AUMENTOS_CARGA': 'Aumentos de carga',
+#                             'REDESELECTRICAS': 'Redes eléctricas',
+#                             'CUENTASNUEVAS': 'Cuentas nuevas'
+#                             }, inplace=True)
+
+# # -----------------------------------------------------14/06/23
+
+#                 colU1, colU2, colU3 = st.columns(spec=[1, 1, 1])
+
+#                 tamaño1 = 35
+#                 color_rec = '#9e9ac8'
+#                 # color_prob =
+
+#                 # Centrar el contenido de colU1
+
+#                 colU1.write(
+#                     f'<p style="text-align: center;color: {color_rec};">Primer recomendación</p>', unsafe_allow_html=True)
+
+#                 # colU1.subheader(str(Xf.loc[0,'Producto_1']))
+
+#                 # ; color: {color1}
+#                 colU1.markdown(
+#                     f'<h1 style="text-align: center; font-size: {tamaño1}px;">{str(Xf.loc[0,"Producto_1"])}</h1>', unsafe_allow_html=True)
+#                 tx_proba1 = str(Xf.loc[0, 'Probabilidad_1']) + " probabilidad " + '(' + str(
+#                     np.round(Xf.loc[0, 'Valor_probabilidad1'] * 100, 2)) + ' %)'
+#                 colU1.write(
+#                     f'<p style="text-align: center;">{tx_proba1}</p>', unsafe_allow_html=True)
+
+#                 # Centrar el contenido de colU2
+#                 colU2.write(
+#                     f'<p style="text-align: center;color: {color_rec};">Segunda recomendación</p>', unsafe_allow_html=True)
+#                 # colU2.subheader(str(Xf.loc[0,'Producto_2']))
+#                 # tamaño1=40
+#                 # ; color: {color1}
+#                 colU2.markdown(
+#                     f'<h1 style="text-align: center; font-size: {tamaño1}px;">{str(Xf.loc[0,"Producto_2"])}</h1>', unsafe_allow_html=True)
+
+#                 tx_proba2 = str(Xf.loc[0, 'Probabilidad_2']) + " probabilidad " + '(' + str(
+#                     np.round(Xf.loc[0, 'Valor_probabilidad2'] * 100, 2)) + ' %)'
+#                 colU2.write(
+#                     f'<p style="text-align: center;">{tx_proba2}</p>', unsafe_allow_html=True)
+
+#                 # Centrar el contenido de colU3
+#                 colU3.write(
+#                     f'<p style="text-align: center;color: {color_rec};">Tercer recomendación</p>', unsafe_allow_html=True)
+#                 # colU3.subheader(str(Xf.loc[0,'Producto_3']))
+#                 # ; color: {color1}
+#                 colU3.markdown(
+#                     f'<h1 style="text-align: center; font-size: {tamaño1}px;">{str(Xf.loc[0,"Producto_3"])}</h1>', unsafe_allow_html=True)
+
+#                 tx_proba3 = str(Xf.loc[0, 'Probabilidad_3']) + " probabilidad " + '(' + str(
+#                     np.round(Xf.loc[0, 'Valor_probabilidad3'] * 100, 2)) + ' %)'
+#                 colU3.write(
+#                     f'<p style="text-align: center;">{tx_proba3}</p>', unsafe_allow_html=True)
+
+#                 st.write('')
+#                 st.write('')
+#                 st.write('')
+#                 download_excel(Xf, 'Resultado')
+
+#     #             )
+#             except UnboundLocalError:
+#                 st.warning(
+#                     'No ha cargado un archivo para procesar!. En el menú de la izquierda cargar archivo en la sección Modelo Múltiples Variables')
 
 
 if __name__ == '__main__':
