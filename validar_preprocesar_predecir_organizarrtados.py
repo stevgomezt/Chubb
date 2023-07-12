@@ -984,12 +984,14 @@ class Modelos_2():
     
     if num_reg_con_vacios>0:
       df_conteo_reg_vacios = self.obtener_registros_vacios(df_campos_existentes)
-      
+      cc = 0
       for campo, conteo, indices in zip(df_conteo_reg_vacios['Nombre campo'],df_conteo_reg_vacios['Registros vacíos'],df_conteo_reg_vacios['Índices de los registros vacíos']):
-        legend_reg_campos_vacios = str(self.obtener_hora_fecha())+' - '+'En la columna '+str(campo)+ ' se encontraron '+str(conteo)+' registros con campos vacios en las filas: '+str(indices)+'.'
+        
+        mask_logs = ['CLIENTES_CON_PRODUCTO','FRECUENCIA_DE_CONTACTO','NIVEL_EDUCATIVO','SITUACION_LABORAL']
+        legend_reg_campos_vacios = str(self.obtener_hora_fecha())+' - '+'En la columna '+str(mask_logs[cc])+ ' se encontraron '+str(conteo)+' registros con campos vacios en las filas: '+str(indices)+'.'
         lista_logs.append(legend_reg_campos_vacios)
         logs_riesgo.append(0)
-    
+        cc+=1
       # --------------------------------------------------------------------------------------
       
     campos_categorias_no_esperadas = list(df_v[(df_v['CATEGORIAS_VALIDAS']=='NO')&(df_v['EXISTE']!='NO')]['CAMPO'])#[df_v['EXISTE']!='NO']['CAMPO'])
@@ -1009,7 +1011,7 @@ class Modelos_2():
       categorias_incorrectas = list(conjunto)
 
       if len(indices_distintos)>0:
-        legend_categorias_malas = str(self.obtener_hora_fecha())+' - '+'En la columna '+str(campo)+ ' se encontraron '+str(len(indices_distintos))+' registros con categorias no esperadas: '+', '.join(map(str,categorias_incorrectas ))+' en las filas '+', '.join(map(str,indices_distintos )) 
+        legend_categorias_malas = str(self.obtener_hora_fecha())+' - '+'En la columna FRECUENCIA_DE_CONTACTO se encontraron '+str(len(indices_distintos))+' registros con categorias no esperadas: '+', '.join(map(str,categorias_incorrectas ))+' en las filas '+', '.join(map(str,indices_distintos )) 
         lista_logs.append(legend_categorias_malas)
         logs_riesgo.append(0)
     # print('flag4')
@@ -1059,7 +1061,7 @@ class Modelos_2():
         
     ###################################
         labels = df_group[config['y_axis']]
-        values = df_group['Cantidad']
+        values = df_group['Cantidad']*100
 
         if paleta == 1:
           colors = ['#023059','#0367A6','#9AB5D9','#035AA6', '#CEDEF2']
@@ -1070,7 +1072,7 @@ class Modelos_2():
         colors = colors[:len(df_group)]
         
         fig = go.Figure(data=[go.Pie(labels=labels, values=values,marker=dict(colors=colors))])
-
+        # fig.update_traces(hovertemplate="%{label}<br> %{value}K")
         fig.update_layout( margin=dict(l=0, r=0, t=0, b=0),
                           legend=dict(
                                       x=-0.5,
