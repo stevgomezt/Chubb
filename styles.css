@@ -4,13 +4,12 @@ footer {
   visibility: hidden;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Handlee&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Handlee&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Orbitron&display=swap");
 
 /* Inicio font pagina */
 .css-nsuj5j {
-  font-family: "Roboto", sans-serif;
+  font-family: "Playfair Display", serif;
 }
 /* Fin font pagina */
 
@@ -51,12 +50,9 @@ ul {
 }
 
 /* Inicio ocultar barra indicador menu */
-.st-du {
-  background-color: #a5a5a5;
-}
 
 .st-dm {
-  background-color: #4d7eff;
+  background-color: #6e27c5;
 }
 
 .st-dr {
@@ -109,13 +105,15 @@ ul {
   margin: 0px;
   line-height: 1.6;
   user-select: none;
-  background-color: #091a42;
-  color: white;
-  border: none;
+  background-color: white;
+  color: black;
   font-weight: bold !important;
   height: 35px;
   width: auto;
-  border-radius: 50px;
+  border: solid 1px black;
+  font-size: 12px;
+  font-family: "Playfair Display", serif;
+  border-radius: 0px;
 }
 
 .css-ezd9go:focus {
@@ -124,21 +122,24 @@ ul {
 }
 
 .css-ezd9go:focus:not(:active) {
-  color: white;
-  border-color: none;
-  background-color: #4d7eff;
+  border-color: white;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 
 .css-ezd9go:hover {
-  background-color: #4d7eff;
-  color: white;
-  border: none;
+  border-color: black;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 
 .css-ezd9go:active {
-  color: white;
-  border-color: none;
-  background-color: #4d7eff;
+  border-color: white;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 /* Fin boton cargar archivo */
 
@@ -153,13 +154,15 @@ ul {
   margin: 0px;
   line-height: 1.6;
   user-select: none;
-  background-color: #091a42;
-  color: white;
-  border: none;
+  background-color: white;
+  color: black;
   font-weight: bold !important;
   height: 35px;
   width: auto;
-  border-radius: 50px;
+  border: solid 1px black;
+  font-size: 12px;
+  font-family: "Playfair Display", serif;
+  border-radius: 0px;
 }
 
 .css-bcpc81:focus {
@@ -168,21 +171,24 @@ ul {
 }
 
 .css-bcpc81:focus:not(:active) {
-  color: white;
-  border-color: none;
-  background-color: #4d7eff;
+  border-color: white;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 
 .css-bcpc81:hover {
-  background-color: #4d7eff;
-  color: white;
-  border: none;
+  border-color: black;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 
 .css-bcpc81:active {
-  color: white;
-  border-color: none;
-  background-color: #4d7eff;
+  border-color: white;
+  background-color: white;
+  color: black;
+  text-decoration: underline;
 }
 /* Fin boton ejecutar modelo*/
 
@@ -216,10 +222,6 @@ h3 {
   background: none;
 }
 
-/* .st-de:hover {
-  color: #4d7eff;
-} */
-
 .css-qcqlej {
   width: 100%;
   -webkit-box-flex: 1;
@@ -243,23 +245,12 @@ h3 {
   width: 100%;
 }
 
-.st-du {
-  background-color: #efc800;
-}
-
 /* Inicio padding y color fondo menu lateral */
 .css-1544g2n {
   padding: 5rem 1rem 1.5rem;
   background-color: transparent;
 }
 /* Fin padding y color fondo menu lateral */
-
-/* Inicio color fondo despliegue lista */
-.st-dz {
-  border-bottom-color: rgb(163, 168, 184);
-  background-color: #6e27c529;
-}
-/* Fin color fondo despliegue lista */
 
 /* Inicio color fondo despliegue titulos lista */
 .st-c8 {
